@@ -4,29 +4,37 @@
   align-items: center;
   padding: 1rem 1.5rem;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.header .left-section {
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.right-section {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.header .search-input {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.header .right-section {
+.search-bar {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
 }
 
-.header .icon-button {
-  background: none;
+.search-bar input {
   border: none;
-  cursor: pointer;
+  background: transparent;
+  outline: none;
+  margin-left: 0.5rem;
 }
