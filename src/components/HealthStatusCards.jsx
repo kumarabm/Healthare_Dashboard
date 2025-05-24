@@ -1,6 +1,6 @@
 import React from "react";
 import { healthStatus } from "../data/healthStatus";
-import "../styles/HealthStatusCards.css";
+import "../style/HealthStatusCards.css";
 
 const HealthStatusCards = () => (
   <div className="health-cards">

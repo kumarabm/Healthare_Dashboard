@@ -1,7 +1,7 @@
 import React from "react";
 import { upcoming } from "../data/appointments";
 import SimpleAppointmentCard from "./SimpleAppointmentCard";
-import "../styles/UpcomingSchedule.css";
+import "../style/UpcomingSchedule.css";
 
 const UpcomingSchedule = () => (
   <div className="upcoming-schedule">

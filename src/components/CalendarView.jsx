@@ -1,6 +1,6 @@
 import React from "react";
 import { calendarData, appointments } from "../data/calendar";
-import "../styles/CalendarView.css";
+import "../style/CalendarView.css";
 
 const CalendarView = () => (
   <div className="calendar-section">

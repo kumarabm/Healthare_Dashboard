@@ -1,0 +1,16 @@
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f5f7fa;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}

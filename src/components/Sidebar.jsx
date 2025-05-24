@@ -1,7 +1,7 @@
 import React from "react";
 import { navigationLinks } from "../data/navigation";
 import * as Icons from "lucide-react";
-import "../styles/Sidebar.css";
+import "../style/Sidebar.css";
 
 const Sidebar = () => (
   <aside className="sidebar">

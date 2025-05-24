@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/AnatomySection.css";
+import "../style/AnatomySection.css";
 
 const AnatomySection = () => (
   <div className="anatomy-section">

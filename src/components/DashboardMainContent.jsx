@@ -4,7 +4,7 @@ import HealthStatusCards from "./HealthStatusCards";
 import CalendarView from "./CalendarView";
 import UpcomingSchedule from "./UpcomingSchedule";
 import ActivityFeed from "./ActivityFeed";
-import "../styles/DashboardMainContent.css";
+import "../style/DashboardMainContent.css";
 
 const DashboardMainContent = () => (
   <div className="dashboard-main">

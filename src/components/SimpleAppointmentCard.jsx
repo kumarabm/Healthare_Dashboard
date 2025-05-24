@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/SimpleAppointmentCard.css";
+import "../style/SimpleAppointmentCard.css";
 
 const SimpleAppointmentCard = ({ title, time, icon }) => (
   <div className="simple-appointment-card">
