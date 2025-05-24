@@ -1,23 +1,57 @@
-import React from "react";
-import { navigationLinks } from "../data/navigation";
-import * as Icons from "lucide-react";
-import "../style/Sidebar.css";
+export default function Sidebar() {
+  const menuItems = [
+    { name: "Dashboard", icon: "🏠", active: true },
+    { name: "Appointments", icon: "📅", active: false },
+    { name: "Health Records", icon: "📋", active: false },
+    { name: "Medications", icon: "💊", active: false },
+    { name: "Reports", icon: "📊", active: false },
+    { name: "Settings", icon: "⚙️", active: false },
+  ];
 
-const Sidebar = () => (
-  <aside className="sidebar">
-    <h3 className="sidebar-heading">General</h3>
-    <ul>
-      {navigationLinks.map((link) => {
-        const Icon = Icons[link.icon];
-        return (
-          <li key={link.label}>
-            <Icon size={18} />
-            <span>{link.label}</span>
-          </li>
-        );
-      })}
-    </ul>
-  </aside>
-);
+  return (
+    <div className="bg-white h-full shadow-lg border-r border-slate-200 flex flex-col">
+      {/* Logo */}
+      <div className="p-6 border-b border-slate-200">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">H</span>
+          </div>
+          <h2 className="text-xl font-bold text-slate-800">HealthCare</h2>
+        </div>
+      </div>
 
-export default Sidebar;
+      {/* Navigation */}
+      <nav className="flex-1 p-4">
+        <ul className="space-y-2">
+          {menuItems.map((item) => (
+            <li key={item.name}>
+              <button className={`
+                w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors
+                ${item.active 
+                  ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-500' 
+                  : 'text-slate-600 hover:bg-slate-50'
+                }
+              `}>
+                <span className="text-lg">{item.icon}</span>
+                <span className="font-medium">{item.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* User Profile */}
+      <div className="p-4 border-t border-slate-200">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center text-white font-bold">
+            JD
+          </div>
+          <div>
+            <p className="font-medium text-slate-800">John Doe</p>
+            <p className="text-sm text-slate-500">Patient ID: 12345</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
