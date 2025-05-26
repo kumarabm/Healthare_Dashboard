@@ -41,8 +41,9 @@ export default function Sidebar() {
             <Heart className="w-4 h-4 text-white" />
           </div> */}
           <span className="text-xl font-bold text-slate-800">
-            Healthcare<span className="text-cyan-500">.</span>
-          </span>
+  <span style={{ color: '#7DF9FF' }}>Health</span>care<span className="text-cyan-500">.</span>
+</span>
+
         </div>
       </div>
 
