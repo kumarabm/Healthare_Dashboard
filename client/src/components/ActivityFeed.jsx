@@ -1,69 +1,53 @@
-import { useState, useEffect } from "react";
+import React from "react";
 
 export default function ActivityFeed() {
-  const [activityData, setActivityData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const weekDays = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+  
+  // Activity data matching the image pattern
+  const activityData = [
+    { day: "Mon", appointments: 2, colors: ["bg-cyan-400", "bg-purple-500"] },
+    { day: "Tues", appointments: 3, colors: ["bg-cyan-400", "bg-blue-500", "bg-purple-500"] },
+    { day: "Wed", appointments: 1, colors: ["bg-cyan-400"] },
+    { day: "Thurs", appointments: 3, colors: ["bg-cyan-400", "bg-blue-500", "bg-purple-500"] },
+    { day: "Fri", appointments: 4, colors: ["bg-cyan-400", "bg-blue-500", "bg-purple-500", "bg-green-400"] },
+    { day: "Sat", appointments: 2, colors: ["bg-cyan-400", "bg-gray-400"] },
+    { day: "Sun", appointments: 2, colors: ["bg-cyan-400", "bg-purple-500"] }
+  ];
 
-  useEffect(() => {
-    fetch('/api/activity-data/1')
-      .then(res => res.json())
-      .then(data => {
-        setActivityData(data);
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-slate-200 rounded w-1/2"></div>
-          <div className="h-32 bg-slate-200 rounded"></div>
-        </div>
-      </div>
-    );
-  }
-
-  const maxValue = Math.max(...activityData.map(d => d.value));
+  const totalAppointments = activityData.reduce((sum, day) => sum + day.appointments, 0);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-      <h3 className="text-lg font-semibold text-slate-800 mb-6">Activity Overview</h3>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 max-w-md">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-semibold text-gray-800">Activity</h3>
+        <span className="text-sm text-gray-500">{totalAppointments} appointments this week</span>
+      </div>
       
-      <div className="space-y-4">
-        {/* Chart */}
-        <div className="h-32 flex items-end justify-between space-x-2">
-          {activityData.map((item, index) => (
-            <div key={item.id} className="flex-1 flex flex-col items-center">
-              <div className="w-full bg-slate-100 rounded-t relative overflow-hidden" style={{ height: '100px' }}>
-                <div 
-                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t transition-all duration-500"
-                  style={{ height: `${(item.value / maxValue) * 100}%` }}
+      {/* Chart */}
+      <div className="flex items-end justify-between space-x-3 h-32 mb-4">
+        {activityData.map((dayData, index) => (
+          <div key={index} className="flex flex-col items-center flex-1">
+            {/* Bar container */}
+            <div className="flex flex-col items-center justify-end h-24 w-6">
+              {dayData.colors.map((color, colorIndex) => (
+                <div
+                  key={colorIndex}
+                  className={`w-full rounded-sm mb-1 ${color}`}
+                  style={{ 
+                    height: `${15 + (colorIndex * 8)}px`,
+                    marginBottom: colorIndex < dayData.colors.length - 1 ? '2px' : '0'
+                  }}
                 />
-              </div>
-              <span className="text-xs text-slate-500 mt-2">
-                {new Date(item.date).getDate()}
-              </span>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-slate-800">{activityData.length}</p>
-            <p className="text-xs text-slate-500">Days Tracked</p>
+            
+            {/* Day label */}
+            <span className="text-xs text-gray-500 mt-2 font-medium">
+              {dayData.day}
+            </span>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-blue-600">{Math.round(activityData.reduce((sum, item) => sum + item.value, 0) / activityData.length)}</p>
-            <p className="text-xs text-slate-500">Avg Activity</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-green-600">{Math.max(...activityData.map(d => d.value))}</p>
-            <p className="text-xs text-slate-500">Peak Day</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
