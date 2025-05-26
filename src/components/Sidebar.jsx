@@ -41,19 +41,6 @@ export default function Sidebar() {
           ))}
         </ul>
       </nav>
-
-      {/* User Profile */}
-      <div className="p-4 border-t border-slate-200">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center text-white font-bold">
-            JD
-          </div>
-          <div>
-            <p className="font-medium text-slate-800">John Doe</p>
-            <p className="text-sm text-slate-500">Patient ID: 12345</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
