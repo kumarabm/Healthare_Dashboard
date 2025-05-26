@@ -51,7 +51,7 @@ export default function CalendarView() {
   };
 
   return (
-    <div className="min-h-screen bg-white p-6">
+   
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100">
           {/* Header */}
@@ -187,6 +187,6 @@ export default function CalendarView() {
           </div>
         </div>
       </div>
-    </div>
+   
   );
 }
