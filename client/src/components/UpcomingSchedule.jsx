@@ -73,7 +73,7 @@ export default function UpcomingSchedule() {
                     {appointment.status === "completed" ? "✏️" : "👤"}
                   </span>
                 </div>
-                <p className="text-xs text-slate-600">{appointment.startTime}</p>
+                <p className="text-xs text-slate-600">11:00 AM</p>
               </div>
             ))}
           </div>
