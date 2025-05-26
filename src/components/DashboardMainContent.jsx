@@ -34,7 +34,7 @@ export default function DashboardMainContent() {
           <div className="flex items-center justify-between w-full">
             {/* Middle - Search bar */}
             <div className="flex items-center space-x-4 flex-1">
-              <div className="relative flex-1 max-w-md">
+              <div className="relative flex-1 max-w-sm">
                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400">
                   🔍
                 </span>
