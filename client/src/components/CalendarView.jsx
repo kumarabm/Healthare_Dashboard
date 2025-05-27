@@ -1,121 +1,192 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function CalendarView() {
-  const [appointments, setAppointments] = useState([]);
-  const [currentDate] = useState(new Date());
+  const weekDays = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+  const dates = [25, 26, 27, 28, 29, 30, 31];
+  const hours = ["10:00", "11:00", "12:00"];
 
-  useEffect(() => {
-    fetch('/api/appointments/1')
-      .then(res => res.json())
-      .then(data => setAppointments(data))
-      .catch(() => {});
-  }, []);
-
-  // Generate calendar days for October 2021
-  const getDaysInMonth = () => {
-    const year = 2021;
-    const month = 9; // October (0-indexed)
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
-
-    const days = [];
-    
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
+  // Appointment cards data
+  const appointmentCards = [
+    { 
+      id: 1, 
+      title: "Dentist",
+      time: "09:00-11:00",
+      doctor: "Dr. Cameron Williamson",
+      color: "bg-indigo-600",
+      icon: "🦷"
+    },
+    { 
+      id: 2, 
+      title: "Physiotherapy Appointment",
+      time: "11:00-12:00", 
+      doctor: "Dr. Kevin Dsouza",
+      color: "bg-indigo-300",
+      icon: "🏃"
     }
-    
-    // Add all days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      days.push(day);
-    }
-    
-    return days;
+  ];
+
+  // Time slot appointments for grid
+  const timeSlotAppointments = {
+    26: [{ time: "08:00", color: "bg-indigo-600" }],
+    27: [{ time: "12:00", color: "bg-indigo-600" }],
+    28: [
+      { time: "10:00", color: "bg-indigo-600" },
+      { time: "11:00", color: "bg-indigo-300" }
+    ],
+    29: [{ time: "12:00", color: "bg-indigo-300" }],
+    30: [
+      { time: "09:00", color: "bg-indigo-300" },
+      { time: "14:00", color: "bg-gray-300" },
+      { time: "15:00", color: "bg-gray-300" }
+    ],
+    31: [
+      { time: "10:00", color: "bg-gray-300" },
+      { time: "11:00", color: "bg-gray-300" }
+    ]
   };
 
-  const hasAppointment = (day) => {
-    if (!day) return false;
-    const dateStr = `2021-10-${day.toString().padStart(2, '0')}`;
-    return appointments.some(apt => apt.appointmentDate === dateStr);
+  const getAppointmentsForDay = (date) => {
+    return timeSlotAppointments[date] || [];
   };
-
-  const getAppointmentsForDay = (day) => {
-    if (!day) return [];
-    const dateStr = `2021-10-${day.toString().padStart(2, '0')}`;
-    return appointments.filter(apt => apt.appointmentDate === dateStr);
-  };
-
-  const days = getDaysInMonth();
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-slate-800">October 2021</h3>
-        <div className="flex space-x-2">
-          <button className="p-2 hover:bg-slate-100 rounded-lg">
-            <span className="text-slate-400">←</span>
-          </button>
-          <button className="p-2 hover:bg-slate-100 rounded-lg">
-            <span className="text-slate-400">→</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-1 mb-4">
-        {/* Week day headers */}
-        {weekDays.map(day => (
-          <div key={day} className="p-2 text-center text-xs font-medium text-slate-500">
-            {day}
-          </div>
-        ))}
-        
-        {/* Calendar days */}
-        {days.map((day, index) => (
-          <div key={index} className="relative">
-            {day ? (
-              <div className={`
-                p-2 text-center text-sm cursor-pointer rounded-lg transition-colors
-                ${day === 29 ? 'bg-blue-500 text-white font-medium' : 'hover:bg-slate-50'}
-                ${hasAppointment(day) ? 'text-blue-600 font-medium' : ''}
-              `}>
-                {day}
-                {hasAppointment(day) && (
-                  <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full"></div>
-                )}
-              </div>
-            ) : (
-              <div className="p-2"></div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Today's Appointments */}
-      <div className="mt-6 border-t border-slate-100 pt-4">
-        <h4 className="text-sm font-medium text-slate-600 mb-3">Today's Schedule - Oct 29</h4>
-        <div className="space-y-3">
-          {getAppointmentsForDay(29).map((appointment) => (
-            <div key={appointment.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className={`w-3 h-3 rounded-full ${
-                  appointment.status === 'completed' ? 'bg-green-500' : 'bg-blue-500'
-                }`}></div>
-                <div>
-                  <p className="font-medium text-slate-800 text-sm">{appointment.appointmentType}</p>
-                  <p className="text-xs text-slate-500">{appointment.startTime} - {appointment.endTime}</p>
-                </div>
-              </div>
-              <div className="text-xs text-slate-500">
-                {appointment.doctorName}
-              </div>
+   
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+          {/* Header */}
+          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+            <h2 className="text-lg font-semibold text-gray-800">October 2021</h2>
+            <div className="flex space-x-2">
+              <button className="p-2 rounded hover:bg-gray-100 text-gray-500">
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button className="p-2 rounded hover:bg-gray-100 text-gray-500">
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
-          ))}
+          </div>
+
+          {/* Calendar Grid */}
+          <div className="p-6">
+            {/* Days + Dates Header */}
+            <div className="grid grid-cols-8 gap-2 text-center text-sm font-medium text-gray-600 mb-4">
+              <div></div>
+              {weekDays.map((day, idx) => (
+                <div key={idx} className="py-2">{day}</div>
+              ))}
+              <div></div>
+              {dates.map((date, idx) => (
+                <div
+                  key={idx}
+                  className={`py-2 rounded-lg font-medium ${
+                    date === 29 ? "bg-indigo-100 text-indigo-700" : "text-gray-700"
+                  }`}
+                >
+                  {date}
+                </div>
+              ))}
+            </div>
+
+            {/* Time Grid */}
+            <div className="grid grid-cols-8 gap-2 text-sm">
+              {hours.map((hour, hourIdx) => (
+                <React.Fragment key={hourIdx}>
+                  {/* Time label */}
+                  <div className="text-gray-500 py-3 text-left font-medium">{hour}</div>
+
+                  {dates.map((date, dateIdx) => {
+                    const dayAppointments = getAppointmentsForDay(date);
+                    const appointmentAtTime = dayAppointments.find(apt => apt.time === hour);
+
+                    return (
+                      <div key={`${date}-${hour}`} className="py-2">
+                        {appointmentAtTime ? (
+                          <div className={`px-3 py-1 rounded-full text-white text-xs font-medium text-center ${appointmentAtTime.color}`}>
+                            {appointmentAtTime.time}
+                          </div>
+                        ) : (
+                          // Handle specific time slots from the image
+                          (date === 26 && hour === "10:00") ? (
+                            <div className="px-3 py-1 rounded-full text-white text-xs font-medium text-center bg-indigo-600">
+                              08:00
+                            </div>
+                          ) : (date === 27 && hour === "10:00") ? (
+                            <div className="px-3 py-1 rounded-full text-white text-xs font-medium text-center bg-indigo-600">
+                              12:00
+                            </div>
+                          ) : (date === 28 && hour === "10:00") ? (
+                            <div className="px-3 py-1 rounded-full text-white text-xs font-medium text-center bg-indigo-600">
+                              10:00
+                            </div>
+                          ) : (date === 28 && hour === "11:00") ? (
+                            <div className="px-3 py-1 rounded-full text-white text-xs font-medium text-center bg-indigo-300">
+                              11:00
+                            </div>
+                          ) : (date === 28 && hour === "12:00") ? (
+                            <div className="text-gray-400 text-center">—</div>
+                          ) : (date === 29 && hour === "10:00") ? (
+                            <div className="text-gray-400 text-center">—</div>
+                          ) : (date === 29 && hour === "11:00") ? (
+                            <div className="text-gray-400 text-center">—</div>
+                          ) : (date === 29 && hour === "12:00") ? (
+                            <div className="px-3 py-1 rounded-full text-white text-xs font-medium text-center bg-indigo-300">
+                              12:00
+                            </div>
+                          ) : (date === 30 && hour === "10:00") ? (
+                            <div className="px-3 py-1 rounded-full text-gray-700 text-xs font-medium text-center bg-gray-300">
+                              09:00
+                            </div>
+                          ) : (date === 30 && hour === "11:00") ? (
+                            <div className="px-3 py-1 rounded-full text-gray-700 text-xs font-medium text-center bg-gray-300">
+                              14:00
+                            </div>
+                          ) : (date === 30 && hour === "12:00") ? (
+                            <div className="px-3 py-1 rounded-full text-gray-700 text-xs font-medium text-center bg-gray-300">
+                              15:00
+                            </div>
+                          ) : (date === 31 && hour === "10:00") ? (
+                            <div className="px-3 py-1 rounded-full text-gray-700 text-xs font-medium text-center bg-gray-300">
+                              15:00
+                            </div>
+                          ) : (date === 31 && hour === "11:00") ? (
+                            <div className="px-3 py-1 rounded-full text-gray-700 text-xs font-medium text-center bg-gray-300">
+                              11:00
+                            </div>
+                          ) : (
+                            <div className="text-gray-400 text-center">—</div>
+                          )
+                        )}
+                      </div>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Appointment Cards */}
+          <div className="px-6 pb-6">
+            <div className="grid md:grid-cols-2 gap-4">
+              {appointmentCards.map((appointment) => (
+                <div
+                  key={appointment.id}
+                  className={`p-4 rounded-xl text-white relative overflow-hidden ${appointment.color}`}
+                >
+                  <div className="relative z-10">
+                    <h3 className="font-semibold text-white mb-1">{appointment.title}</h3>
+                    <p className="text-sm text-white/90 mb-2">{appointment.time}</p>
+                    <p className="text-sm text-white/80">{appointment.doctor}</p>
+                  </div>
+                  <div className="absolute top-4 right-4 text-2xl opacity-20">
+                    {appointment.icon}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+   
   );
 }
