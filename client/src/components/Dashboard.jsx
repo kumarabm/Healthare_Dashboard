@@ -5,7 +5,7 @@ import CalendarView from "./CalendarView";
 import UpcomingSchedule from "./UpcomingSchedule";
 import ActivityFeed from "./ActivityFeed";
 
-export default function DashboardMainContent() {
+export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

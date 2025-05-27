@@ -1,6 +1,6 @@
 import { Search, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import humanBodyImage from "../assets/image.png";
+import humanBodyImage from "../assets/human .jpg";
 
 export default function AnatomySection() {
   // Health metrics data matching the image

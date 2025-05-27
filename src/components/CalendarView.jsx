@@ -51,21 +51,18 @@ export default function CalendarView() {
   };
 
   return (
-    
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-          {/* Header */}
-          <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-800">October 2021</h2>
-            <div className="flex space-x-2">
-              <button className="p-2 rounded hover:bg-gray-100 text-gray-500">
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button className="p-2 rounded hover:bg-gray-100 text-gray-500">
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold text-slate-800">October 2021</h3>
+        <div className="flex space-x-2">
+          <button className="p-2 hover:bg-slate-100 rounded-lg">
+            <span className="text-slate-400">←</span>
+          </button>
+          <button className="p-2 hover:bg-slate-100 rounded-lg">
+            <span className="text-slate-400">→</span>
+          </button>
+        </div>
+      </div>
 
           {/* Calendar Grid */}
           <div className="p-6">
