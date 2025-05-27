@@ -1,4 +1,6 @@
-import React from "react";
+import { Search, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import humanBodyImage from "../assets/image.png";
 
 export default function AnatomySection() {
   // Health metrics data matching the image
@@ -29,120 +31,124 @@ export default function AnatomySection() {
     }
   ];
 
+  const [hoveredMetric, setHoveredMetric] = useState(null);
+
+  const handleSearch = () => {
+    console.log('Search health metrics...');
+  };
+
+  const handleHeartDetails = () => {
+    console.log('Show heart health details...');
+  };
+
+  const handleHealthyLeg = () => {
+    console.log('Show healthy leg details...');
+  };
+
+  const handleDetails = () => {
+    console.log('Navigate to detailed health view...');
+  };
+
+  const handleMetricClick = (metricName) => {
+    console.log(`View ${metricName} details...`);
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 max-w-sm">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 max-w-sm w-full">
+      {/* Header Section */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-slate-800">Health Status</h3>
-        <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-          <span className="text-slate-400 text-lg">🔍</span>
+        <button 
+          className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+          onClick={handleSearch}
+        >
+          <Search className="w-5 h-5 text-slate-400" />
         </button>
       </div>
       
-      <div className="space-y-6">
-        {/* Human Body Illustration - Anatomical Model */}
-        <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 h-80 flex items-center justify-center overflow-hidden">
-          <div className="relative">
-            {/* Anatomical human body with detailed muscle structure */}
-            <div className="w-28 h-60 relative">
-              {/* Head */}
-              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-9 h-11 bg-gradient-to-b from-orange-200 to-orange-300 rounded-full border border-orange-400"></div>
-              
-              {/* Neck */}
-              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-orange-200 border border-orange-300"></div>
-              
-              {/* Main torso with detailed muscle anatomy */}
-              <div className="absolute top-11 left-1/2 transform -translate-x-1/2 w-18 h-36 bg-gradient-to-b from-red-400 via-red-500 to-red-600 rounded-t-3xl relative border border-red-700">
-                {/* Chest muscles (pectorals) */}
-                <div className="absolute top-2 left-2 right-2 h-5 border-2 border-red-300 rounded-t-full opacity-80"></div>
-                <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-px h-3 bg-red-300"></div>
-                
-                {/* Rib definition */}
-                <div className="absolute top-9 left-2 right-2 space-y-1">
-                  <div className="h-px bg-red-300 opacity-60"></div>
-                  <div className="h-px bg-red-300 opacity-60"></div>
-                  <div className="h-px bg-red-300 opacity-60"></div>
-                </div>
-                
-                {/* Abdominal muscles */}
-                <div className="absolute top-14 left-3 right-3 h-14 border border-red-300 rounded opacity-70">
-                  <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-px h-12 bg-red-300"></div>
-                  <div className="absolute top-2 left-1 right-1 h-px bg-red-300"></div>
-                  <div className="absolute top-5 left-1 right-1 h-px bg-red-300"></div>
-                  <div className="absolute top-8 left-1 right-1 h-px bg-red-300"></div>
-                </div>
-              </div>
-              
-              {/* Arms with muscle definition */}
-              <div className="absolute top-13 -left-3 w-5 h-20 bg-gradient-to-b from-red-400 to-red-500 rounded-full rotate-12 border border-red-600">
-                <div className="absolute top-3 left-1 right-1 h-3 border border-red-300 rounded-full opacity-60"></div>
-              </div>
-              <div className="absolute top-13 -right-3 w-5 h-20 bg-gradient-to-b from-red-400 to-red-500 rounded-full -rotate-12 border border-red-600">
-                <div className="absolute top-3 left-1 right-1 h-3 border border-red-300 rounded-full opacity-60"></div>
-              </div>
-              
-              {/* Legs with muscle definition */}
-              <div className="absolute bottom-0 left-4 w-4 h-14 bg-gradient-to-b from-red-500 to-red-600 rounded-full border border-red-700">
-                <div className="absolute top-2 left-0.5 right-0.5 h-5 border border-red-400 rounded opacity-60"></div>
-              </div>
-              <div className="absolute bottom-0 right-4 w-4 h-14 bg-gradient-to-b from-red-500 to-red-600 rounded-full border border-red-700">
-                <div className="absolute top-2 left-0.5 right-0.5 h-5 border border-red-400 rounded opacity-60"></div>
-              </div>
-            </div>
+      {/* Anatomical Body Illustration */}
+      <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 h-80 flex items-center justify-center overflow-hidden mb-6">
+        <div className="relative">
+          {/* Human body anatomical image */}
+          <img 
+            src={humanBodyImage} 
+            alt="Anatomical human body illustration" 
+            className="w-32 h-72 object-contain"
+          />
 
-            {/* Health indicator badge */}
-            <div className="absolute top-16 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center space-x-1">
-                <span>❤️</span>
-                <span>Healthy Heart</span>
-              </div>
-            </div>
-
-            {/* Monthly Log button */}
-            <button className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-3 py-1 rounded-md shadow-md">
-              📅 Monthly Log
+          {/* Health indicator badge - positioned on right side of heart */}
+          <div className="absolute top-20 left-3/4 transform -translate-x-1/2 -translate-y-1/2">
+            <button 
+              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg flex items-center space-x-1 transition-colors cursor-pointer"
+              onClick={handleHeartDetails}
+            >
+              <span>❤️</span>
+              <span>Healthy Heart</span>
             </button>
           </div>
-        </div>
 
-        {/* Health Metrics */}
-        <div className="space-y-4">
-          {healthMetrics.map((metric) => (
-            <div key={metric.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                  metric.color === "#EF4444" ? "bg-red-100" :
-                  metric.color === "#F59E0B" ? "bg-yellow-100" :
-                  "bg-green-100"
-                }`}>
-                  <span className="text-sm">
-                    {metric.icon}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-medium text-slate-800">{metric.name}</h3>
-                  <p className="text-sm text-slate-500">Due: {metric.dueDate}</p>
-                </div>
-              </div>
-              <div className="w-24">
-                <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
-                  <div 
-                    className="h-full rounded-full transition-all duration-500 ease-out"
-                    style={{
-                      width: `${metric.progress}%`,
-                      backgroundColor: metric.color
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center">
-          <button className="text-blue-500 hover:text-blue-600 text-sm font-medium">
-            Details →
+          {/* Healthy Leg button - positioned at left knee */}
+          <button 
+            className="absolute bottom-16 left-6 bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-3 py-1 rounded-md shadow-md transition-colors flex items-center space-x-1"
+            onClick={handleHealthyLeg}
+          >
+            <span>🦵</span>
+            <span>Healthy Leg</span>
           </button>
         </div>
+      </div>
+
+      {/* Health Metrics */}
+      <div className="space-y-4 mb-6">
+        {healthMetrics.map((metric) => (
+          <div 
+            key={metric.id} 
+            className={`flex items-center justify-between p-4 bg-slate-50 rounded-lg transition-colors cursor-pointer ${
+              hoveredMetric === metric.id ? 'bg-slate-100' : 'hover:bg-slate-100'
+            }`}
+            onMouseEnter={() => setHoveredMetric(metric.id)}
+            onMouseLeave={() => setHoveredMetric(null)}
+            onClick={() => handleMetricClick(metric.name)}
+          >
+            <div className="flex items-center space-x-3">
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                metric.color === "#EF4444" ? "bg-red-100" :
+                metric.color === "#F59E0B" ? "bg-yellow-100" :
+                "bg-green-100"
+              }`}>
+                <span className="text-sm">
+                  {metric.icon}
+                </span>
+              </div>
+              <div>
+                <h3 className="font-medium text-slate-800">{metric.name}</h3>
+                <p className="text-sm text-slate-500">Due: {metric.dueDate}</p>
+              </div>
+            </div>
+            <div className="w-24">
+              <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                <div 
+                  className="h-full rounded-full transition-all duration-500 ease-out"
+                  style={{
+                    width: `${metric.progress}%`,
+                    backgroundColor: metric.color
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Details Navigation */}
+      <div className="text-center">
+        <button 
+          className="text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors flex items-center space-x-1 mx-auto"
+          onClick={handleDetails}
+        >
+          <span>Details</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
